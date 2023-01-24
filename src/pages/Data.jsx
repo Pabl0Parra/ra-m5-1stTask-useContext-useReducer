@@ -6,7 +6,7 @@ import { Container } from '../styles'
 const columns = [
   {
     id: 'name',
-    label: 'Name',
+    label: 'Nombre',
   },
   {
     id: 'surnames',
@@ -21,7 +21,7 @@ const columns = [
   },
   {
     id: 'occupation',
-    label: 'Ocupacion',
+    label: 'Ocupación',
   },
 ]
 
@@ -29,14 +29,14 @@ const data = [
   {
     id: 1,
     name: 'Juan',
-    surnames: 'Perez',
+    surnames: 'Pérez',
     age: 25,
     occupation: 'Developer',
   },
   {
     id: 2,
     name: 'Pedro',
-    surnames: 'Gomez',
+    surnames: 'Gómez',
     age: 75,
     occupation: 'Developer',
   },
