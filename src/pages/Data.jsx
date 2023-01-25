@@ -1,7 +1,9 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react'
 import { Body } from '../components/layout'
 import { ITATable } from '../components/organisms'
 import { Container } from '../styles'
+import data from '../../data'
 
 const columns = [
   {
@@ -9,99 +11,33 @@ const columns = [
     label: 'Nombre',
   },
   {
-    id: 'surnames',
-    label: 'Apellidos',
-  },
-  {
-    id: 'age',
-    label: 'Edad',
+    id: 'price',
+    label: 'Precio',
     cell: (row) => (
-      <span style={{ color: row.age > 50 ? 'green' : 'red' }}>{row.age}</span>
+      <span style={{ color: row.price > 500000 ? 'red' : null }}>
+        {row.price}
+      </span>
     ),
   },
   {
-    id: 'occupation',
-    label: 'Ocupación',
-  },
-]
-
-const data = [
-  {
-    id: 1,
-    name: 'Juan',
-    surnames: 'Perez',
-    age: 25,
-    occupation: 'Developer',
+    id: 'neighborhood',
+    label: 'Barrio',
   },
   {
-    id: 2,
-    name: 'Pedro',
-    surnames: 'Gomez',
-    age: 75,
-    occupation: 'Developer',
+    id: 'seller',
+    label: 'Vendedor',
   },
   {
-    id: 3,
-    name: 'Maria',
-    surnames: 'Gonzalez',
-    age: 45,
-    occupation: 'Developer',
+    id: 'numberOfRooms',
+    label: 'N.Habitaciones',
   },
   {
-    id: 4,
-    name: 'Luis',
-    surnames: 'Garcia',
-    age: 35,
-    occupation: 'Developer',
+    id: 'hasElevator',
+    label: '¿Ascensor?',
   },
   {
-    id: 5,
-    name: 'Ana',
-    surnames: 'Martinez',
-    age: 55,
-    occupation: 'Developer',
-  },
-  {
-    id: 6,
-    name: 'Jose',
-    surnames: 'Lopez',
-    age: 65,
-    occupation: 'Developer',
-  },
-  {
-    id: 7,
-    name: 'Luisa',
-    surnames: 'Perez',
-    age: 25,
-    occupation: 'Developer',
-  },
-  {
-    id: 8,
-    name: 'Alvaro',
-    surnames: 'Ramirez',
-    age: 75,
-    occupation: 'Developer',
-  },
-  {
-    id: 9,
-    name: 'Laura',
-    surnames: 'Centellas',
-    age: 55,
-    occupation: 'Developer',
-  },
-  {
-    id: 10,
-    name: 'Rosa',
-    surnames: 'Garcia',
-    age: 35,
-    occupation: 'Developer',
-  },
-  {
-    id: 11,
-    name: 'Luis',
-    surnames: 'Rivas',
-    age: 31,
-    occupation: 'Developer',
+    id: 'description',
+    label: 'Descripción',
   },
 ]
 
