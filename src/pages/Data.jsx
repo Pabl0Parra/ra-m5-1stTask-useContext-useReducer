@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Body } from '../components/layout'
 import { ITATable } from '../components/organisms'
 import { Container } from '../styles'
@@ -25,28 +25,87 @@ const columns = [
   },
 ]
 
-function Data() {
-  const [data, setData] = useState([])
-  const getData = () => {
-    fetch('db5-1.json', {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    })
-      .then((response) => {
-        console.log(response)
-        return response.json()
-      })
-      .then((myJson) => {
-        console.log(myJson)
-        setData(myJson)
-      })
-  }
-  useEffect(() => {
-    getData()
-  }, [])
+const data = [
+  {
+    id: 1,
+    name: 'Juan',
+    surnames: 'Perez',
+    age: 25,
+    occupation: 'Developer',
+  },
+  {
+    id: 2,
+    name: 'Pedro',
+    surnames: 'Gomez',
+    age: 75,
+    occupation: 'Developer',
+  },
+  {
+    id: 3,
+    name: 'Maria',
+    surnames: 'Gonzalez',
+    age: 45,
+    occupation: 'Developer',
+  },
+  {
+    id: 4,
+    name: 'Luis',
+    surnames: 'Garcia',
+    age: 35,
+    occupation: 'Developer',
+  },
+  {
+    id: 5,
+    name: 'Ana',
+    surnames: 'Martinez',
+    age: 55,
+    occupation: 'Developer',
+  },
+  {
+    id: 6,
+    name: 'Jose',
+    surnames: 'Lopez',
+    age: 65,
+    occupation: 'Developer',
+  },
+  {
+    id: 7,
+    name: 'Luisa',
+    surnames: 'Perez',
+    age: 25,
+    occupation: 'Developer',
+  },
+  {
+    id: 8,
+    name: 'Alvaro',
+    surnames: 'Ramirez',
+    age: 75,
+    occupation: 'Developer',
+  },
+  {
+    id: 9,
+    name: 'Laura',
+    surnames: 'Centellas',
+    age: 55,
+    occupation: 'Developer',
+  },
+  {
+    id: 10,
+    name: 'Rosa',
+    surnames: 'Garcia',
+    age: 35,
+    occupation: 'Developer',
+  },
+  {
+    id: 11,
+    name: 'Luis',
+    surnames: 'Rivas',
+    age: 31,
+    occupation: 'Developer',
+  },
+]
 
+function Data() {
   return (
     <Body>
       <Container style={{ marginTop: '2rem' }}>
