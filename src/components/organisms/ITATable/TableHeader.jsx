@@ -7,7 +7,7 @@ function TableHeader() {
   const { columns } = state
   return (
     <thead>
-      <tr>
+      <tr style={{ textAlign: 'left' }}>
         {columns
           .filter((col) => !col.isHidden)
           .map((col) => (
