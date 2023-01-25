@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useContext } from 'react'
 import TableProvider, { TableContext } from './store/context'
 import { Actions } from './store/reducer'
