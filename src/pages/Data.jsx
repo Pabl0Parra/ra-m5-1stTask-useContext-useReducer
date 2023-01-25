@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Body } from '../components/layout'
 import { ITATable } from '../components/organisms'
 import { Container } from '../styles'
@@ -25,24 +25,28 @@ const columns = [
   },
 ]
 
-const data = [
-  {
-    id: 1,
-    name: 'Juan',
-    surnames: 'Pérez',
-    age: 25,
-    occupation: 'Developer',
-  },
-  {
-    id: 2,
-    name: 'Pedro',
-    surnames: 'Gómez',
-    age: 75,
-    occupation: 'Developer',
-  },
-]
-
 function Data() {
+  const [data, setData] = useState([])
+  const getData = () => {
+    fetch('db5-1.json', {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+      .then((response) => {
+        console.log(response)
+        return response.json()
+      })
+      .then((myJson) => {
+        console.log(myJson)
+        setData(myJson)
+      })
+  }
+  useEffect(() => {
+    getData()
+  }, [])
+
   return (
     <Body>
       <Container style={{ marginTop: '2rem' }}>
@@ -51,5 +55,4 @@ function Data() {
     </Body>
   )
 }
-
 export default Data
