@@ -1,12 +1,33 @@
 import styled from 'styled-components'
+import { FlexBox } from '../../../styles'
 
 export const TableCell = styled.td`
   border: 1px solid;
-  padding: 0.5rem;
+  padding: 1rem;
 `
 
 export const TableStyled = styled.table`
   border: 1px solid;
   border-collapse: collapse;
   width: 100%;
+`
+export const ButtonsDivStyled = styled.div`
+  display: flex;
+  margin-bottom: 1.5rem;
+  justify-content: flex-end;
+`
+
+export const SpanStyled = styled.span`
+  padding: 0.25rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: bold;
+`
+
+export const StyledTd = styled(FlexBox)`
+  flex-direction: row;
+  justify-content: ${(props) => props.justifyContent || ''};
 `
