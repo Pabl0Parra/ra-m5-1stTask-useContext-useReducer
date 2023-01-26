@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { TableContext } from './store/context'
-import TableFooter from './TableFooter'
+
 import { TableCell } from './styles'
 
 function TableBody() {
@@ -12,6 +12,7 @@ function TableBody() {
   const end = start + rowsPerPage
 
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       <tbody>
         {data.slice(start, end).map((d) => (
@@ -26,7 +27,6 @@ function TableBody() {
           </tr>
         ))}
       </tbody>
-      <TableFooter />
     </>
   )
 }

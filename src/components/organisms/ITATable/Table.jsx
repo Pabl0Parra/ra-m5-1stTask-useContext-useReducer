@@ -6,6 +6,7 @@ import { Actions } from './store/reducer'
 import { TableStyled, ButtonsDivStyled, SpanStyled } from './styles'
 import TableBody from './TableBody'
 import TableHeader from './TableHeader'
+import TableFooter from './TableFooter'
 import { Button, Icon } from '../../atoms'
 
 function Table({ columns, data, showHeader = true }) {
@@ -47,6 +48,7 @@ function Table({ columns, data, showHeader = true }) {
         <TableStyled>
           {showHeader && <TableHeader />}
           <TableBody />
+          <TableFooter />
         </TableStyled>
       )}
     </>
