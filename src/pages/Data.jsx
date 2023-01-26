@@ -1,13 +1,14 @@
-/* eslint-disable no-nested-ternary */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Body } from '../components/layout'
 import { ITATable } from '../components/organisms'
-import { Container } from '../styles'
-import data from '../../data'
+import { Container, FlexBox } from '../styles'
+import { getAllHouses } from '../store/houses.slice'
+import styled from 'styled-components'
 
 const columns = [
   {
-    id: 'name',
+    id: 'title',
     label: 'Nombre',
   },
   {
@@ -15,33 +16,38 @@ const columns = [
     label: 'Precio',
     cell: (row) => (
       <span style={{ color: row.price > 500000 ? 'red' : null }}>
-        {row.price}
+        {row.price}€
       </span>
     ),
   },
   {
-    id: 'neighborhood',
+    id: 'district',
     label: 'Barrio',
   },
   {
-    id: 'seller',
-    label: 'Vendedor',
+    id: 'city',
+    label: 'Ciudad',
   },
   {
-    id: 'numberOfRooms',
-    label: 'N.Habitaciones',
-  },
-  {
-    id: 'hasElevator',
-    label: '¿Ascensor?',
-  },
-  {
-    id: 'description',
-    label: 'Descripción',
+    id: 'type',
+    label: 'Tipo',
   },
 ]
 
 function Data() {
+  // const [mode, setMode] = useState(tableType.LIST_ALL)
+  const [currentPage, setCurrentPage] = useState(1)
+  const { reqStatus, houses } = useSelector((state) => state.houses)
+  const { isError, isSuccess, isLoading, hasData } = reqStatus
+  const { byId, allIds } = houses
+  const dispatch = useDispatch()
+
+  const data = allIds.map((id) => ({ ...byId[id], id }))
+
+  useEffect(() => {
+    dispatch(getAllHouses())
+  }, [dispatch])
+
   return (
     <Body>
       <Container style={{ marginTop: '2rem' }}>
