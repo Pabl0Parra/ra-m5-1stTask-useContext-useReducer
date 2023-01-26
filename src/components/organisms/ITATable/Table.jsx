@@ -16,7 +16,7 @@ function Table({ columns, data, showHeader = true }) {
     dispatch({ type: Actions.SET_COLUMNS, payload: columns })
     dispatch({
       type: Actions.SET_TABLEPAGINATION,
-      payload: { currentPage: 1, rowsPerPage: 9 },
+      payload: { currentPage: 1, rowsPerPage: 10 },
     })
   }, [data, columns, dispatch])
 
