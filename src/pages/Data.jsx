@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+/* eslint-disable no-nested-ternary */
+import React from 'react'
+import { useFetch } from '../hooks'
 import { Body } from '../components/layout'
 import { ITATable } from '../components/organisms'
-import { Container, FlexBox } from '../styles'
-import { getAllHouses } from '../store/houses.slice'
-import styled from 'styled-components'
+import { Container } from '../styles'
+import { urls } from '../constants'
 
 const columns = [
   {
@@ -40,19 +40,7 @@ const columns = [
 ]
 
 function Data() {
-  // const [mode, setMode] = useState(tableType.LIST_ALL)
-  const [currentPage, setCurrentPage] = useState(1)
-  const { reqStatus, houses } = useSelector((state) => state.houses)
-  const { isError, isSuccess, isLoading, hasData } = reqStatus
-  const { byId, allIds } = houses
-  const dispatch = useDispatch()
-
-  const data = allIds.map((id) => ({ ...byId[id], id }))
-
-  useEffect(() => {
-    dispatch(getAllHouses())
-  }, [dispatch])
-
+  const { data } = useFetch(urls.houses)
   return (
     <Body>
       <Container style={{ marginTop: '2rem' }}>
