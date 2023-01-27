@@ -24,7 +24,12 @@ export default function TablePagination() {
   return (
     <div style={{ display: 'flex' }}>
       <Button
-        style={{ backgroundColor: 'transparent', boxShadow: 'none' }}
+        disabled={currentPage === 1}
+        style={{
+          backgroundColor: 'transparent',
+          boxShadow: 'none',
+          visibility: currentPage === 1 ? 'hidden' : 'visible',
+        }}
         onClick={() => handlePrev()}
       >
         <Icon style={{ color: 'black' }} icon="arrow_back_ios" />
@@ -33,7 +38,12 @@ export default function TablePagination() {
         Página {currentPage} de {totalPages}
       </SpanStyled>
       <Button
-        style={{ backgroundColor: 'transparent', boxShadow: 'none' }}
+        disabled={currentPage === totalPages}
+        style={{
+          backgroundColor: 'transparent',
+          boxShadow: 'none',
+          visibility: currentPage === totalPages ? 'hidden' : 'visible',
+        }}
         onClick={() => handleNext()}
       >
         <Icon style={{ color: 'black' }} icon="arrow_forward_ios" />
