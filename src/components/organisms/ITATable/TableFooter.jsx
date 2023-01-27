@@ -1,11 +1,22 @@
+import styled from 'styled-components'
 import TablePagination from './TablePagination'
 import ShowRows from './helpers/ShowRows'
 
-export default function TableFooter() {
+const TableFooterStyled = styled.div`
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+`
+
+function TableFooter() {
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <TableFooterStyled>
       <TablePagination />
       <ShowRows />
-    </div>
+    </TableFooterStyled>
   )
 }
+
+export default styled(TableFooter)``

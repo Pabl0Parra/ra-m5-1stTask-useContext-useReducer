@@ -8,7 +8,7 @@ export const TableCell = styled.td`
 export const TableStyled = styled.table`
   border: 1px solid;
   border-collapse: collapse;
-  width: 100%;
+  text-align: left;
 `
 export const ButtonsDivStyled = styled.div`
   display: flex;
