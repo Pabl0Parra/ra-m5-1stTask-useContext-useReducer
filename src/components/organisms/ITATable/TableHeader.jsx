@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import React, { useContext } from 'react'
-import ResetSort from './helpers/ResetSorting'
 import { TableContext } from './store/context'
 import { TableCell } from './styles'
+// eslint-disable-next-line import/no-useless-path-segments
+import { Icon } from '../../../components/atoms'
 
 function TableHeader() {
   const { state, dispatch } = useContext(TableContext)
@@ -10,9 +11,13 @@ function TableHeader() {
 
   const handleSort = (column) => {
     if (column.id === sortBy) {
-      dispatch({ type: 'SET_SORTDIRECTION' })
+      dispatch({
+        type: 'SET_SORTDIRECTION',
+        payload: sortDirection === 'asc' ? 'desc' : 'asc',
+      })
     } else {
       dispatch({ type: 'SET_SORTBY', payload: column.id })
+      dispatch({ type: 'SET_SORTDIRECTION', payload: 'asc' })
     }
   }
 
@@ -27,13 +32,12 @@ function TableHeader() {
               {col.id === sortBy && (
                 <>
                   {sortDirection === 'asc' ? (
-                    <span> &uarr;</span>
+                    <Icon style={{ color: 'black' }} icon="arrow_drop_up" />
                   ) : (
-                    <span> &darr;</span>
+                    <Icon style={{ color: 'black' }} icon="arrow_drop_down" />
                   )}
                 </>
               )}
-              <ResetSort />
             </TableCell>
           ))}
       </tr>

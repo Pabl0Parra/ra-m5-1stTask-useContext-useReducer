@@ -1,11 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-const-assign */
 import React, { useContext, useCallback } from 'react'
 import { TableContext } from './store/context'
-import { Actions } from './store/reducer'
-
 import { TableCell } from './styles'
 
 function TableBody() {
-  const { state, dispatch } = useContext(TableContext)
+  const { state } = useContext(TableContext)
   const { data, columns, sortBy, sortDirection } = state
 
   // Sort the data based on the current sort column and direction
@@ -24,28 +24,12 @@ function TableBody() {
     })
   }, [data, sortBy, sortDirection])
 
-  // Handle column header click
-  const handleSort = useCallback(
-    (columnId) => {
-      if (sortBy === columnId) {
-        dispatch({
-          type: Actions.SET_SORTDIRECTION,
-          payload: sortDirection === 'asc' ? 'desc' : 'asc',
-        })
-      } else {
-        dispatch({ type: Actions.SET_SORTBY, payload: columnId })
-        dispatch({ type: Actions.SET_SORTDIRECTION, payload: 'asc' })
-      }
-    },
-    [sortBy, sortDirection, dispatch],
-  )
-
   return (
     <tbody>
       {sortedData().map((d) => (
         <tr key={d.id}>
           {columns.map((col) => (
-            <TableCell key={`${d.id}-${col.id}`} onClick={handleSort}>
+            <TableCell key={`${d.id}-${col.id}`}>
               {col.cell ? col.cell(d) : d[col.id]}
             </TableCell>
           ))}
