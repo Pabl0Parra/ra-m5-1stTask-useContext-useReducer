@@ -8,17 +8,25 @@ import TableBody from './TableBody'
 import TableHeader from './TableHeader'
 import DownloadFile from './helpers/DownloadFile'
 
-function Table({ columns, data, showHeader = true }) {
+function Table({
+  columns,
+  data,
+  showHeader = true,
+  sortBy = '',
+  sortDirection = 'asc',
+}) {
   const { state, dispatch } = useContext(TableContext)
 
   useEffect(() => {
     dispatch({ type: Actions.SET_DATA, payload: data })
     dispatch({ type: Actions.SET_COLUMNS, payload: columns })
+    dispatch({ type: Actions.SET_SORTBY, payload: sortBy })
+    dispatch({ type: Actions.SET_SORTDIRECTION, payload: sortDirection })
     dispatch({
       type: Actions.SET_TABLEPAGINATION,
       payload: { currentPage: 1, rowsPerPage: 10 },
     })
-  }, [data, columns, dispatch])
+  }, [data, columns, sortBy, sortDirection, dispatch])
 
   return (
     <>

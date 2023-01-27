@@ -1,33 +1,57 @@
-import React, { useContext } from 'react'
+import React, { useContext, useCallback } from 'react'
 import { TableContext } from './store/context'
+import { Actions } from './store/reducer'
 
 import { TableCell } from './styles'
 
 function TableBody() {
-  const { state } = useContext(TableContext)
-  const { data, columns, tablePagination } = state
-  const { currentPage, rowsPerPage } = tablePagination
+  const { state, dispatch } = useContext(TableContext)
+  const { data, columns, sortBy, sortDirection } = state
 
-  const start = (currentPage - 1) * rowsPerPage
-  const end = start + rowsPerPage
+  // Sort the data based on the current sort column and direction
+  const sortedData = useCallback(() => {
+    if (!sortBy) {
+      return data
+    }
+    return [...data].sort((a, b) => {
+      if (a[sortBy] < b[sortBy]) {
+        return sortDirection === 'asc' ? -1 : 1
+      }
+      if (a[sortBy] > b[sortBy]) {
+        return sortDirection === 'asc' ? 1 : -1
+      }
+      return 0
+    })
+  }, [data, sortBy, sortDirection])
+
+  // Handle column header click
+  const handleSort = useCallback(
+    (columnId) => {
+      if (sortBy === columnId) {
+        dispatch({
+          type: Actions.SET_SORTDIRECTION,
+          payload: sortDirection === 'asc' ? 'desc' : 'asc',
+        })
+      } else {
+        dispatch({ type: Actions.SET_SORTBY, payload: columnId })
+        dispatch({ type: Actions.SET_SORTDIRECTION, payload: 'asc' })
+      }
+    },
+    [sortBy, sortDirection, dispatch],
+  )
 
   return (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
-    <>
-      <tbody>
-        {data.slice(start, end).map((d) => (
-          <tr key={d.id}>
-            {columns
-              .filter((col) => !col.isHidden)
-              .map((col) => (
-                <TableCell key={`${d.id}-${col.id}`}>
-                  {col.cell ? col.cell(d) : d[col.id]}
-                </TableCell>
-              ))}
-          </tr>
-        ))}
-      </tbody>
-    </>
+    <tbody>
+      {sortedData().map((d) => (
+        <tr key={d.id}>
+          {columns.map((col) => (
+            <TableCell key={`${d.id}-${col.id}`} onClick={handleSort}>
+              {col.cell ? col.cell(d) : d[col.id]}
+            </TableCell>
+          ))}
+        </tr>
+      ))}
+    </tbody>
   )
 }
 
