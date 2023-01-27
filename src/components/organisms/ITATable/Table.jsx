@@ -3,11 +3,10 @@
 import { useEffect, useContext } from 'react'
 import { TableContext } from './store/context'
 import { Actions } from './store/reducer'
-import { TableStyled, ButtonsDivStyled, SpanStyled } from './styles'
+import { TableStyled } from './styles'
 import TableBody from './TableBody'
 import TableHeader from './TableHeader'
-
-import { Button, Icon } from '../../atoms'
+import DownloadFile from './helpers/DownloadFile'
 
 function Table({ columns, data, showHeader = true }) {
   const { state, dispatch } = useContext(TableContext)
@@ -21,27 +20,9 @@ function Table({ columns, data, showHeader = true }) {
     })
   }, [data, columns, dispatch])
 
-  const handleDownload = () => {
-    const jsonData = JSON.stringify(state.data)
-    const blob = new Blob([jsonData], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
-    link.download = 'data.json'
-    link.click()
-    link.parentNode.removeChild(link)
-  }
-
   return (
     <>
-      <ButtonsDivStyled>
-        <Button style={{ backgroundColor: '#20db43' }} onClick={handleDownload}>
-          <SpanStyled>
-            <Icon color="white" icon="system_update_alt" />
-            Descargar
-          </SpanStyled>
-        </Button>
-      </ButtonsDivStyled>
+      <DownloadFile />
       {state.isLoading ? (
         '...loadin'
       ) : (
