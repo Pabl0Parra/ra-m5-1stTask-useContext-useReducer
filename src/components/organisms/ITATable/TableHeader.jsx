@@ -9,6 +9,7 @@ function TableHeader() {
   const { state, dispatch } = useContext(TableContext)
   const { columns, data, sortBy, sortDirection } = state
 
+  //   Toda esta lógica debe estar en el reducer
   const handleSort = (column) => {
     const dataArray = Object.values(data)
     const sortedData = dataArray.sort((a, b) => {

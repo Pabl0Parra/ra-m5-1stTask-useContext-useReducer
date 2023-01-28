@@ -10,6 +10,7 @@ const columns = [
   {
     id: 'title',
     label: 'Nombre',
+    // Aquí debería de haber un parametro del tipo sort: true, para así indicar que columnas se ordenan
   },
   {
     id: 'price',
