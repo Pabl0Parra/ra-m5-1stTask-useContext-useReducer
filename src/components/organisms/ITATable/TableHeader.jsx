@@ -7,30 +7,17 @@ import { Icon } from '../../../components/atoms'
 
 function TableHeader() {
   const { state, dispatch } = useContext(TableContext)
-  const { columns, data, sortBy, sortDirection } = state
+  const { columns, sortBy, sortDirection } = state
 
   const handleSort = (column) => {
-    const dataArray = Object.values(data)
-    const sortedData = dataArray.sort((a, b) => {
-      if (a[sortBy] < b[sortBy]) {
-        return sortDirection === 'asc' ? -1 : 1
-      }
-      if (a[sortBy] > b[sortBy]) {
-        return sortDirection === 'asc' ? 1 : -1
-      }
-      return 0
+    dispatch({
+      type: 'SET_SORT_TABLE',
+      payload: {
+        columnId: column.id,
+        sortBy,
+        sortDirection,
+      },
     })
-
-    if (column.id === sortBy) {
-      dispatch({
-        type: 'SET_SORTDIRECTION',
-        payload: sortDirection === 'asc' ? 'desc' : 'asc',
-      })
-    } else {
-      dispatch({ type: 'SET_SORTBY', payload: column.id })
-      dispatch({ type: 'SET_SORTDIRECTION', payload: 'asc' })
-    }
-    dispatch({ type: 'SET_DATA', payload: sortedData })
   }
 
   return (

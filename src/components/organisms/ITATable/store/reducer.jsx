@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { createNextState } from '@reduxjs/toolkit'
 
 export const initialState = {
@@ -20,6 +21,7 @@ export const Actions = {
   SET_CURRENTPAGE: 'SET_CURRENTPAGE',
   SET_ROWSPERPAGE: 'SET_ROWSPERPAGE',
   SET_LOADING: 'SET_LOADING',
+  SET_SORT_TABLE: 'SET_SORT_TABLE',
 }
 
 // eslint-disable-next-line default-param-last
@@ -59,6 +61,32 @@ export const tableReducer = (state = initialState, action) => {
       return createNextState(state, (draft) => {
         draft.isLoading = action.payload
       })
+
+    case Actions.SET_SORT_TABLE: {
+      const { data } = state
+      const dataArray = Object.values(data)
+      const { columnId, sortBy, sortDirection } = action.payload
+      const sortedData = dataArray.sort((a, b) => {
+        if (a[sortBy] < b[sortBy]) {
+          return sortDirection === 'asc' ? -1 : 1
+        }
+        if (a[sortBy] > b[sortBy]) {
+          return sortDirection === 'asc' ? 1 : -1
+        }
+        return 0
+      })
+
+      return createNextState(state, (draft) => {
+        draft.data = sortedData
+        draft.sortBy = columnId
+        draft.sortDirection =
+          columnId === sortBy
+            ? sortDirection === 'asc'
+              ? 'desc'
+              : 'asc'
+            : 'asc'
+      })
+    }
 
     default:
       return state
