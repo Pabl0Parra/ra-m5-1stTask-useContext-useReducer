@@ -10,10 +10,12 @@ const columns = [
   {
     id: 'title',
     label: 'Nombre',
+    isSortable: true,
   },
   {
     id: 'price',
     label: 'Precio',
+    isSortable: true,
     cell: (row) => (
       <span
         style={{
@@ -28,14 +30,17 @@ const columns = [
   {
     id: 'district',
     label: 'Barrio',
+    isSortable: true,
   },
   {
     id: 'city',
     label: 'Ciudad',
+    isSortable: true,
   },
   {
     id: 'type',
     label: 'Tipo',
+    isSortable: true,
   },
 ]
 
