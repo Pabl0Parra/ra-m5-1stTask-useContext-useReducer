@@ -8,7 +8,7 @@ import { useFetch } from '../hooks'
 import DownloadFile from '../components/organisms/ITATable/helpers/DownloadFile'
 import { Body } from '../components/layout'
 import { ITATable } from '../components/organisms'
-import { Container } from '../styles'
+import { colors, Container } from '../styles'
 import { urls } from '../constants'
 import { Button } from '../components/atoms'
 
@@ -75,7 +75,7 @@ const newColumns = [
 
 function Data() {
   const { data } = useFetch(urls.houses)
-
+  const [activeButton, setActiveButton] = useState('Viviendas')
   const [showNewTable, setShowNewTable] = useState(false)
 
   // derive the new data from the original data
@@ -111,19 +111,40 @@ function Data() {
         }}
       >
         <Button
-          style={{ height: '48px' }}
-          onClick={() => setShowNewTable(false)}
+          style={{
+            height: '48px',
+            backgroundColor:
+              activeButton === 'Viviendas' ? '#f7efef' : `${colors.blue}`,
+          }}
+          onClick={() => {
+            setShowNewTable(false)
+            setActiveButton('Viviendas')
+          }}
         >
-          Viviendas
+          <span
+            style={{
+              color: activeButton === 'Viviendas' ? 'black' : '#ffffff',
+            }}
+          >
+            Viviendas
+          </span>
         </Button>
         <Button
           style={{
             height: '48px',
+            backgroundColor:
+              activeButton === 'Barrio' ? '#f7efef' : `${colors.blue}`,
           }}
-          onClick={() => setShowNewTable(true)}
+          onClick={() => {
+            setShowNewTable(true)
+            setActiveButton('Barrio')
+          }}
         >
-          {' '}
-          Barrio{' '}
+          <span
+            style={{ color: activeButton === 'Barrio' ? 'black' : '#ffffff' }}
+          >
+            Barrio
+          </span>
         </Button>
         <DownloadFile
           originalColumns={originalColumns}
