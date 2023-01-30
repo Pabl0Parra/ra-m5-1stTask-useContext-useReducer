@@ -63,9 +63,15 @@ export const tableReducer = (state = initialState, action) => {
       })
 
     case Actions.SET_SORT_TABLE: {
-      const { data } = state
+      const { data, columns } = state
       const dataArray = Object.values(data)
       const { columnId, sortBy, sortDirection } = action.payload
+
+      if (!columns.find((column) => column.id === columnId).isSortable) {
+        return state
+      }
+      console.log(state)
+
       const sortedData = dataArray.sort((a, b) => {
         if (a[sortBy] < b[sortBy]) {
           return sortDirection === 'asc' ? -1 : 1

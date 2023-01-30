@@ -28,7 +28,7 @@ function TableHeader() {
           .map((col) => (
             <TableCell as="th" key={col.id} onClick={() => handleSort(col)}>
               {col.label}
-              {col.id === sortBy && (
+              {col.id === sortBy && col.isSortable === true && (
                 <>
                   {sortDirection === 'asc' ? (
                     <Icon style={{ color: 'black' }} icon="arrow_drop_up" />
