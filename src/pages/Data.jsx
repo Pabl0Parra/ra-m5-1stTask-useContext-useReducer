@@ -2,7 +2,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable import/named */
 /* eslint-disable import/no-named-as-default */
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useFetch } from '../hooks'
 // eslint-disable-next-line import/no-named-as-default-member
 import DownloadFile from '../components/organisms/ITATable/helpers/DownloadFile'
@@ -78,26 +78,27 @@ function Data() {
   const [activeButton, setActiveButton] = useState('Viviendas')
   const [showNewTable, setShowNewTable] = useState(false)
 
-  // derive the new data from the original data
-  const newData = data.reduce((acc, cur) => {
-    const { district } = cur
-    const found = acc.find((item) => item.district === district)
-    if (found) {
-      found.quantity++
-      found.meanPrice =
-        (found.meanPrice * (found.quantity - 1) + cur.price) / found.quantity
-      found.maxPrice = Math.max(found.maxPrice, cur.price)
-    } else {
-      acc.push({
-        district,
-        quantity: 1,
-        meanPrice: cur.price,
-        maxPrice: cur.price,
-      })
-    }
-
-    return acc
-  }, [])
+  const newData = useMemo(() => {
+    const dataMap = new Map()
+    data.forEach((cur) => {
+      const { district } = cur
+      if (!dataMap.has(district)) {
+        dataMap.set(district, {
+          district,
+          quantity: 1,
+          meanPrice: cur.price,
+          maxPrice: cur.price,
+        })
+      } else {
+        const found = dataMap.get(district)
+        found.quantity++
+        found.meanPrice =
+          (found.meanPrice * (found.quantity - 1) + cur.price) / found.quantity
+        found.maxPrice = Math.max(found.maxPrice, cur.price)
+      }
+    })
+    return Array.from(dataMap.values())
+  }, [data])
 
   return (
     <Body>

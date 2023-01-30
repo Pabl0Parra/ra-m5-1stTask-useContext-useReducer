@@ -19,7 +19,7 @@ function DownloadFile({ originalColumns, newColumns, data, showNewTable }) {
     const link = document.createElement('a')
     link.setAttribute('href', encodedUri)
     if (showNewTable) {
-      link.setAttribute('download', 'districdata.csv')
+      link.setAttribute('download', 'districtdData.csv')
     } else {
       link.setAttribute('download', 'data.csv')
     }
