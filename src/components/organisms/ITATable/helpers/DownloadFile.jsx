@@ -1,31 +1,39 @@
 /* eslint-disable import/named */
-import { useContext } from 'react'
-import { TableContext } from '../store/context'
+
 import { Button, Icon } from '../../../atoms'
-import { ButtonsDivStyled, SpanStyled } from '../styles'
+import { SpanStyled } from '../styles'
 
-function DownloadFile() {
-  const { state } = useContext(TableContext)
-
+function DownloadFile({ originalColumns, newColumns, data, showNewTable }) {
   const handleDownload = () => {
-    const jsonData = JSON.stringify(state.data)
-    const blob = new Blob([jsonData], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
+    let headers = originalColumns
+    if (showNewTable) {
+      headers = newColumns
+    }
+    const headerRow = headers.map((header) => header.label).join(',')
+
+    const rows = data.map((row) =>
+      headers.map((header) => row[header.id]).join(','),
+    )
+    const csvContent = `${headerRow}\n${rows.join('\n')}`
+    const encodedUri = encodeURI(`data:text/csv;charset=utf-8,${csvContent}`)
     const link = document.createElement('a')
-    link.href = url
-    link.download = 'data.json'
+    link.setAttribute('href', encodedUri)
+    if (showNewTable) {
+      link.setAttribute('download', 'districdata.csv')
+    } else {
+      link.setAttribute('download', 'data.csv')
+    }
+    document.body.appendChild(link)
     link.click()
     link.parentNode.removeChild(link)
   }
   return (
-    <ButtonsDivStyled>
-      <Button style={{ backgroundColor: '#20db43' }} onClick={handleDownload}>
-        <SpanStyled>
-          <Icon color="white" icon="system_update_alt" />
-          Descargar
-        </SpanStyled>
-      </Button>
-    </ButtonsDivStyled>
+    <Button style={{ backgroundColor: '#20db43' }} onClick={handleDownload}>
+      <SpanStyled>
+        <Icon color="white" icon="system_update_alt" />
+        Descargar
+      </SpanStyled>
+    </Button>
   )
 }
 export default DownloadFile

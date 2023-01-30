@@ -12,8 +12,8 @@ function TableBody() {
 
   return (
     <tbody>
-      {data.slice(start, end).map((d) => (
-        <tr key={d.id}>
+      {data.slice(start, end).map((d, index) => (
+        <tr key={d.id || index}>
           {columns.map((col) => (
             <TableCell key={`${d.id}-${col.id}`}>
               {col.cell ? col.cell(d) : d[col.id]}

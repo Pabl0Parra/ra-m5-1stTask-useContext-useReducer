@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/prop-types */
 /* eslint-disable import/named */
 import { useEffect, useContext } from 'react'
@@ -6,7 +7,6 @@ import { Actions } from './store/reducer'
 import { TableStyled } from './styles'
 import TableBody from './TableBody'
 import TableHeader from './TableHeader'
-import DownloadFile from './helpers/DownloadFile'
 
 function Table({
   columns,
@@ -30,7 +30,6 @@ function Table({
 
   return (
     <>
-      <DownloadFile />
       {state.isLoading ? (
         '...loadin'
       ) : (
