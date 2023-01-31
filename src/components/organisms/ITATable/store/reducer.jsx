@@ -70,7 +70,6 @@ export const tableReducer = (state = initialState, action) => {
       if (!columns.find((column) => column.id === columnId).isSortable) {
         return state
       }
-      console.log(state)
 
       const sortedData = dataArray.sort((a, b) => {
         if (a[sortBy] < b[sortBy]) {

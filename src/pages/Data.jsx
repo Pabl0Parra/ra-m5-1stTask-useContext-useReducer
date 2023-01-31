@@ -165,4 +165,4 @@ function Data() {
   )
 }
 
-export default Data
+export default React.memo(Data)
