@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { TableContext } from './store/context'
 import { TableCell } from './styles'
 
-function TableBody() {
+const TableBody = React.memo(() => {
   const { state } = useContext(TableContext)
   const { data, columns, tablePagination } = state
   const { currentPage, rowsPerPage } = tablePagination
@@ -23,5 +23,6 @@ function TableBody() {
       ))}
     </tbody>
   )
-}
+})
+
 export default TableBody
