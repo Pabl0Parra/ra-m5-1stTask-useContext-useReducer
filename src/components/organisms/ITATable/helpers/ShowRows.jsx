@@ -39,4 +39,4 @@ function ShowRows() {
   )
 }
 
-export default React.memo(ShowRows)
+export default ShowRows
