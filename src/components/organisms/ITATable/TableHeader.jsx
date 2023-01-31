@@ -1,47 +1,51 @@
 /* eslint-disable react/jsx-no-useless-fragment */
-import React, { useContext } from 'react'
+import React, { useContext, useMemo, useCallback } from 'react'
 import { TableContext } from './store/context'
 import { TableCell } from './styles'
-// eslint-disable-next-line import/no-useless-path-segments
-import { Icon } from '../../../components/atoms'
+import { Icon } from '../../atoms'
 
 function TableHeader() {
   const { state, dispatch } = useContext(TableContext)
   const { columns, sortBy, sortDirection } = state
+  const filteredColumns = useMemo(
+    () => columns.filter((col) => !col.isHidden),
+    [columns, sortBy],
+  )
 
-  const handleSort = (column) => {
-    dispatch({
-      type: 'SET_SORT_TABLE',
-      payload: {
-        columnId: column.id,
-        sortBy,
-        sortDirection,
-      },
-    })
-  }
+  const handleSort = useCallback(
+    (column) => {
+      dispatch({
+        type: 'SET_SORT_TABLE',
+        payload: {
+          columnId: column.id,
+          sortBy,
+          sortDirection,
+        },
+      })
+    },
+    [dispatch, sortBy, sortDirection],
+  )
 
   return (
     <thead>
       <tr>
-        {columns
-          .filter((col) => !col.isHidden)
-          .map((col) => (
-            <TableCell as="th" key={col.id} onClick={() => handleSort(col)}>
-              {col.label}
-              {col.id === sortBy && col.isSortable === true && (
-                <>
-                  {sortDirection === 'asc' ? (
-                    <Icon style={{ color: 'black' }} icon="arrow_drop_up" />
-                  ) : (
-                    <Icon style={{ color: 'black' }} icon="arrow_drop_down" />
-                  )}
-                </>
-              )}
-            </TableCell>
-          ))}
+        {filteredColumns.map((col) => (
+          <TableCell as="th" key={col.id} onClick={() => handleSort(col)}>
+            {col.label}
+            {col.id === sortBy && col.isSortable === true && (
+              <>
+                {sortDirection === 'asc' ? (
+                  <Icon style={{ color: 'black' }} icon="arrow_drop_up" />
+                ) : (
+                  <Icon style={{ color: 'black' }} icon="arrow_drop_down" />
+                )}
+              </>
+            )}
+          </TableCell>
+        ))}
       </tr>
     </thead>
   )
 }
 
-export default TableHeader
+export default React.memo(TableHeader)
