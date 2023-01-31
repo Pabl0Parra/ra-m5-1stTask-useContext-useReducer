@@ -1,45 +1,74 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/prop-types */
-/* eslint-disable import/named */
-import { useEffect, useContext } from 'react'
+/* eslint-disable react/jsx-no-useless-fragment */
+import React, { useEffect, useContext, useMemo, useCallback } from 'react'
 import { TableContext } from './store/context'
 import { Actions } from './store/reducer'
 import { TableStyled } from './styles'
 import TableBody from './TableBody'
 import TableHeader from './TableHeader'
 
-function Table({
-  columns,
-  data,
-  showHeader = true,
-  sortBy = '',
-  sortDirection = 'asc',
-}) {
-  const { state, dispatch } = useContext(TableContext)
+const Table = React.memo(
+  ({
+    columns,
+    data,
+    showHeader = true,
+    sortBy = '',
+    sortDirection = 'asc',
+  }) => {
+    const { state, dispatch } = useContext(TableContext)
 
-  useEffect(() => {
-    dispatch({ type: Actions.SET_DATA, payload: data })
-    dispatch({ type: Actions.SET_COLUMNS, payload: columns })
-    dispatch({ type: Actions.SET_SORTBY, payload: sortBy })
-    dispatch({ type: Actions.SET_SORTDIRECTION, payload: sortDirection })
-    dispatch({
-      type: Actions.SET_TABLEPAGINATION,
-      payload: { currentPage: 1, rowsPerPage: 10 },
-    })
-  }, [data, columns, sortBy, sortDirection, dispatch])
+    const dispatchData = useCallback(() => {
+      dispatch({ type: Actions.SET_DATA, payload: data })
+    }, [data, dispatch])
 
-  return (
-    <>
-      {state.isLoading ? (
-        '...loadin'
-      ) : (
-        <TableStyled>
-          {showHeader && <TableHeader />}
-          <TableBody />
-        </TableStyled>
-      )}
-    </>
-  )
-}
+    const dispatchColumns = useCallback(() => {
+      dispatch({ type: Actions.SET_COLUMNS, payload: columns })
+    }, [columns, dispatch])
+
+    const dispatchSortBy = useCallback(() => {
+      dispatch({ type: Actions.SET_SORTBY, payload: sortBy })
+    }, [sortBy, dispatch])
+
+    const dispatchSortDirection = useCallback(() => {
+      dispatch({ type: Actions.SET_SORTDIRECTION, payload: sortDirection })
+    }, [sortDirection, dispatch])
+
+    const dispatchTablePagination = useCallback(() => {
+      dispatch({
+        type: Actions.SET_TABLEPAGINATION,
+        payload: { currentPage: 1, rowsPerPage: 10 },
+      })
+    }, [dispatch])
+
+    useEffect(() => {
+      dispatchData()
+      dispatchColumns()
+      dispatchSortBy()
+      dispatchSortDirection()
+      dispatchTablePagination()
+    }, [
+      dispatchData,
+      dispatchColumns,
+      dispatchSortBy,
+      dispatchSortDirection,
+      dispatchTablePagination,
+    ])
+
+    const isLoading = useMemo(() => state.isLoading, [state.isLoading])
+
+    return (
+      <>
+        {isLoading ? (
+          '...loadin'
+        ) : (
+          <TableStyled>
+            {showHeader && <TableHeader />}
+            <TableBody />
+          </TableStyled>
+        )}
+      </>
+    )
+  },
+)
 
 export default Table
